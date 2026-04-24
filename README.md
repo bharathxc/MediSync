@@ -311,43 +311,6 @@ An "agent" is an LLM that can call external tools to complete tasks. The LLM dec
 
 ---
 
-## 📝 Interview-Ready Explanations
-
-### Q: How does your RAG system handle hallucination?
-
-**A:**
-> "We use a grounding approach with three safeguards. First, the vector store only contains actual policy documents — no synthetic data. Second, the system prompt explicitly instructs the LLM to answer ONLY using retrieved context and to say 'I don't know' if information isn't present. Third, we have a post-generation validation that checks for hedging language ('I think', 'probably') and flags dollar amounts that weren't in the source documents."
-
----
-
-### Q: What's the advantage of your hybrid de-identification pipeline?
-
-**A:**
-> "Traditional NER has excellent recall but poor precision on clinical text — it mistakes medical terms for PII. For example, a spaCy model might incorrectly redact 'Down's syndrome' as a person name. Our pipeline uses Presidio as a high-recall first pass (catch everything that might be sensitive), then pipes those results to an LLM which acts as a precision layer, reviewing each flag and deciding what should actually be redacted. This hybrid approach achieves both high recall and high precision."
-
----
-
-### Q: How do you handle bias in your NLP models?
-
-**A:**
-> "We actively audit for demographic bias by testing the NER model across synthetic datasets representing different name origins (African, South Asian, Middle Eastern, etc.). We calculate detection rate (recall) per group and flag anything below 80%. We also mitigate through the GenAI refinement layer — even if the traditional model misses a name, the LLM can catch it using contextual reasoning. This is an ongoing process; bias auditing is not a one-time fix."
-
----
-
-### Q: Why use LangGraph instead of just LangChain?
-
-**A:**
-> "LangGraph provides explicit state management and cyclic workflows, which LangChain's LCEL doesn't handle well. For our use case, we need the supervisor to make routing decisions based on evolving context — whether to call tools, pass member info between nodes, and accumulate conversation history. LangGraph's StateGraph gives us a clear, debuggable, testable structure where each node is a pure function. It's more code but more control."
-
----
-
-### Q: How would you scale this to production?
-
-**A:**
-> "For production, we'd need: (1) Move from ChromaDB to a proper vector database like Pinecone or Weaviate for scale and replicas; (2) Replace Ollama with an API-backed LLM for consistent latency; (3) Add observability (LangSmith) for monitoring tool usage and latency; (4) Implement caching for repeated queries; (5) Add authentication and rate limiting; (6) Move from Streamlit to a real frontend (React/Next.js)."
-
----
-
 ## 🚀 Setup & Running
 
 ### Prerequisites
