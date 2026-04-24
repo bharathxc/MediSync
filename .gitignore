@@ -1,0 +1,31 @@
+# MediSync AI
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+.venv/
+
+# Environment variables
+.env
+
+# Vector database (regenerated from PDFs)
+chroma_db/
+
+# IDE
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Generated files
+generate_pdfs.py
+
+# Legacy submodule (old project)
+clinical-nlp-safeguard/
+data/
